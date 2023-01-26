@@ -12,9 +12,9 @@
                 </a>
 
                 <div class="navbar-nav w-100">
-                    <a href="#" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Prospects</a>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Members</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Prospecting</a>
+                    <a href="{{ path('app_prospect') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Prospects</a>
+                    <a href="{{ path('app_member') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Members</a>
+                    <a href="{{ path('app_prospecting') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Prospecting</a>
                 </div>
             </nav>
         </div>
@@ -118,32 +118,40 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Tableau</h6>
-                        <a href="">Ajouter</a>
+                        <h6 class="mb-0">PROSPECTING</h6>
+                        <a href="{{ path('app_prospecting_new') }}">Ajouter</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                             <tr class="text-dark">
-                                <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Invoice</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+
+                                <th scope="col">Id</th>
+                                <th scope="col">Member</th>
+                                <th scope="col">Prospect</th>
+                                <th scope="col">date</th>
+                                <th scope="col">Note</th>
+                                <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><input class="form-check-input" type="checkbox"></td>
-                                <td>01 Jan 2045</td>
-                                <td>INV-0123</td>
-                                <td>Jhon Doe</td>
-                                <td>$123</td>
-                                <td>Paid</td>
-                                <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                            </tr>
+                            {% for prospecting in prospectings %}
+                                <tr>
+
+                                    <td>{{ prospecting.id }}</td>
+                                    <td>{{ prospecting.memberProspecting.fullname }}</td>
+                                    <td>{{ prospecting.prospect.name}}</td>
+                                    <td>{{ prospecting.date|date("m/d/Y")}}</td>
+                                    <td>{{ prospecting.note}}</td>
+
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="{{ path('app_prospecting_delete', {id:prospecting.id}) }}">Delete</a>
+                                        <span>|</span>
+                                        <a class="btn btn-sm btn-primary" href="{{ path('app_prospecting_modify', {id:prospecting.id}) }}">Update</a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
